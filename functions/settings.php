@@ -1,0 +1,8 @@
+<?php
+require_once('functions/db.php');
+require_once('functions/functions.php');
+require_once('helpers.php');
+
+$is_auth = rand(0, 1);
+$title = 'Мой заголовок';
+$user_name = 'Иван';
