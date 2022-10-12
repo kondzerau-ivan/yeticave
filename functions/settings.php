@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('Europe/Minsk');
+
 require_once('functions/db.php');
 require_once('functions/functions.php');
 require_once('helpers.php');
