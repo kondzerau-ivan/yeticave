@@ -1,1 +1,64 @@
-<mxfile host="app.diagrams.net" modified="2022-10-13T20:58:14.840Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36" version="20.4.0" etag="JVo3jnRjPxmDGKO_iXK3" type="github"><diagram id="SxP6mq9ISiSGDPXhivtF">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2022-10-13T21:40:32.114Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36" etag="iLReS7_CwKK3Sbq1Qx5s" version="20.4.0" type="github">
+  <diagram id="SxP6mq9ISiSGDPXhivtF" name="Page-1">
+    <mxGraphModel dx="1422" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="l3vJrxgKA-3qi-W0g01E-1" value="&lt;h4 style=&quot;box-sizing: inherit; text-rendering: optimizelegibility; -webkit-font-smoothing: antialiased; font-family: &amp;quot;TT Norms Pro&amp;quot;, Arial, sans-serif; color: rgb(51, 51, 51); margin: 15px 0px 0.67em; font-size: 20px; line-height: 1.5; padding-bottom: 0px; border-bottom: none; font-variant-ligatures: none; text-align: start; background-color: rgb(255, 255, 255);&quot; id=&quot;yeti-5-1&quot;&gt;Категория&lt;/h4&gt;&lt;div style=&quot;text-align: left;&quot;&gt;название&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;символьный код&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="80" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="l3vJrxgKA-3qi-W0g01E-2" value="&lt;h4 style=&quot;box-sizing: inherit; text-rendering: optimizelegibility; -webkit-font-smoothing: antialiased; font-family: &amp;quot;TT Norms Pro&amp;quot;, Arial, sans-serif; color: rgb(51, 51, 51); margin: 15px 0px 0.67em; font-size: 20px; line-height: 1.5; padding-bottom: 0px; border-bottom: none; font-variant-ligatures: none; background-color: rgb(255, 255, 255);&quot; id=&quot;yeti-5-2&quot;&gt;Лот&lt;/h4&gt;&lt;div style=&quot;text-align: left;&quot;&gt;дата и время создания&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;название&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;описание&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;изображение (ссылка)&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;начальная цена&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;дата завершения&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;шаг ставки&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;-----------------------&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;автор&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;победитель&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;категория&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="360" width="200" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="l3vJrxgKA-3qi-W0g01E-3" value="&lt;h4 style=&quot;box-sizing: inherit; text-rendering: optimizelegibility; -webkit-font-smoothing: antialiased; font-family: &amp;quot;TT Norms Pro&amp;quot;, Arial, sans-serif; color: rgb(51, 51, 51); margin: 15px 0px 0.67em; font-size: 20px; line-height: 1.5; padding-bottom: 0px; border-bottom: none; font-variant-ligatures: none; text-align: start; background-color: rgb(255, 255, 255);&quot; id=&quot;yeti-5-3&quot;&gt;Ставка&lt;/h4&gt;&lt;div style=&quot;text-align: left;&quot;&gt;дата и время размещения&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;размер ставки&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;-------------------------&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;пользователь&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;лот&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="80" width="200" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="l3vJrxgKA-3qi-W0g01E-4" value="&lt;h4 style=&quot;box-sizing: inherit; text-rendering: optimizelegibility; -webkit-font-smoothing: antialiased; font-family: &amp;quot;TT Norms Pro&amp;quot;, Arial, sans-serif; color: rgb(51, 51, 51); margin: 15px 0px 0.67em; font-size: 20px; line-height: 1.5; padding-bottom: 0px; border-bottom: none; font-variant-ligatures: none; text-align: start; background-color: rgb(255, 255, 255);&quot; id=&quot;yeti-5-4&quot;&gt;Пользователь&lt;/h4&gt;&lt;div style=&quot;text-align: left;&quot;&gt;дата и время регистрации&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;email&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;имя&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;пароль (хэш)&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;контакты&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;-------------------------&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;созданные лоты&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;ставки&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="400" width="200" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="l3vJrxgKA-3qi-W0g01E-6" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.296;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#009900;" edge="1" parent="1" source="l3vJrxgKA-3qi-W0g01E-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="380" y="460" as="sourcePoint" />
+            <mxPoint x="560" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="l3vJrxgKA-3qi-W0g01E-7" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.296;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#009900;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="470.00000000000006" as="sourcePoint" />
+            <mxPoint x="560" y="470.08" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="l3vJrxgKA-3qi-W0g01E-8" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.683;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#3333FF;" edge="1" parent="1" source="l3vJrxgKA-3qi-W0g01E-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="580" y="720" as="sourcePoint" />
+            <mxPoint x="280" y="564" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="l3vJrxgKA-3qi-W0g01E-9" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;fillColor=#3333FF;" edge="1" parent="1" source="l3vJrxgKA-3qi-W0g01E-4" target="l3vJrxgKA-3qi-W0g01E-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="310" y="469.9200000000001" as="sourcePoint" />
+            <mxPoint x="590" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="l3vJrxgKA-3qi-W0g01E-10" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#009900;" edge="1" parent="1" source="l3vJrxgKA-3qi-W0g01E-2" target="l3vJrxgKA-3qi-W0g01E-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="320" y="479.9200000000001" as="sourcePoint" />
+            <mxPoint x="600" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="l3vJrxgKA-3qi-W0g01E-11" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;exitX=0.83;exitY=1;exitDx=0;exitDy=0;entryX=0.83;entryY=0;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;fillColor=#990000;" edge="1" parent="1" source="l3vJrxgKA-3qi-W0g01E-3" target="l3vJrxgKA-3qi-W0g01E-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="670" y="410" as="sourcePoint" />
+            <mxPoint x="670" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="l3vJrxgKA-3qi-W0g01E-12" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#990000;entryX=0.95;entryY=0.037;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="l3vJrxgKA-3qi-W0g01E-3" target="l3vJrxgKA-3qi-W0g01E-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="430" as="sourcePoint" />
+            <mxPoint x="450" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
