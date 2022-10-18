@@ -13,11 +13,7 @@ CREATE TABLE IF NOT EXISTS users
   email VARCHAR(320) UNIQUE NOT NULL,
   login VARCHAR(128) UNIQUE NOT NULL,
   password VARCHAR(255) NOT NULL,
-  contacts TEXT NOT NULL,
-  lot_id INT NOT NULL,
-  bet_id INT NOT NULL,
-  FOREIGN KEY (lot_id) REFERENCES lots(id),
-  FOREIGN KEY (bet_id) REFERENCES bets(id)
+  contacts TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS lots
 (
