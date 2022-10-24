@@ -23,3 +23,21 @@ VALUES('2014 Rossignol District Snowboard', 'img/lot-1.jpg', 10999, '2022-10-15'
 INSERT INTO bets(amount, user_id, lot_id)
 VALUES('9000', 1, 3),
       ('6400', 2, 6);
+
+SELECT title FROM categories;
+
+SELECT lots.title, lots.start_price, lots.image_url, categories.title
+FROM lots INNER JOIN categories ON lots.category_id = categories.id
+ORDER BY lots.created_at DESC
+LIMIT 3;
+
+SELECT lots.title, categories.title
+FROM lots INNER JOIN categories ON lots.category_id = categories.id
+WHERE lots.id = 1;
+
+UPDATE lots SET title = '2014 Rossignol District Snowboard'
+WHERE lots.id = 1;
+
+SELECT * FROM bets
+WHERE lot_id = 3
+ORDER BY placed_at DESC;
