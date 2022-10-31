@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * @var array $categories
+ * @var array $lots
+ * @var string $title
+ * @var integer $is_auth
+ * @var string $user_name
+ */
+
 require_once('functions/settings.php');
 
 $content = include_template('main.php', [

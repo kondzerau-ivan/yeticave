@@ -1,11 +1,17 @@
+<?php
+/**
+ * @var array $categories
+ * @var array $lots
+ */
+?>
 <section class="promo">
         <h2 class="promo__title">Нужен стафф для катки?</h2>
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
           <!--заполните этот список из массива категорий-->
-          <?php foreach ($categories as $modifier => $category) : ?>
-            <li class="promo__item promo__item--<?= htmlspecialchars($modifier); ?>">
-              <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($category); ?></a>
+          <?php foreach ($categories as $category) : ?>
+            <li class="promo__item promo__item--<?= htmlspecialchars($category['symbol']); ?>">
+              <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($category['title']); ?></a>
             </li>
           <?php endforeach; ?>
         </ul>
@@ -29,7 +35,7 @@
                   <span class="lot__amount">Стартовая цена</span>
                   <span class="lot__cost"><?= priceFormat($lot['price']); ?></span>
                 </div>
-                <?php $date_range = getDateRange(htmlspecialchars($lot['date_end'])); ?>
+                <?php $date_range = getDateRange(htmlspecialchars($lot['finished_at'])); ?>
                 <div class="lot__timer timer<?= $date_range['hours'] == '00' ? ' timer--finishing' : ''; ?>">
                   <?= $date_range['hours'] . ': ' . $date_range['minutes']; ?>
                 </div>
