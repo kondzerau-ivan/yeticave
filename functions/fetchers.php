@@ -24,7 +24,8 @@ function fetchLots(): array
     global $connection;
     $sql = "SELECT lots.title, lots.start_price AS price, lots.image_url AS image, lots.finished_at, categories.title AS category
             FROM lots INNER JOIN categories ON lots.category_id = categories.id
-            ORDER BY lots.created_at DESC
+            WHERE lots.finished_at > NOW()
+            ORDER BY lots.finished_at DESC
             LIMIT 3";
     $query = mysqli_query($connection, $sql);
 
