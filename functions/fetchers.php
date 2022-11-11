@@ -22,7 +22,7 @@ function fetchCategories(): array
 function fetchLots(): array
 {
     global $connection;
-    $sql = "SELECT lots.title, lots.start_price AS price, lots.image_url AS image, lots.finished_at, categories.title AS category
+    $sql = "SELECT lots.id, lots.title, lots.start_price AS price, lots.image_url AS image, lots.finished_at, categories.title AS category
             FROM lots INNER JOIN categories ON lots.category_id = categories.id
             WHERE lots.finished_at > NOW()
             ORDER BY lots.finished_at DESC
