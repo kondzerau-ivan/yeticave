@@ -10,21 +10,24 @@
 
 require_once('functions/settings.php');
 
-echo '<pre>' . var_export($_GET['id'], true) . '</pre>';
-echo '<pre>' . var_export($lots, true) . '</pre>';
+if ($_GET['id']) {
+    $lot = fetchLotById($_GET['id']);
+    if ($lot) {
+        $content = include_template('lot.php', [
+            'categories' => $categories,
+            'lot' => $lot
+        ]);
 
-if ($_GET['id'] && isset($lot['id'])) {
-    $content = include_template('lot.php', [
-        'categories' => $categories,
-        'lots' => $lots
-    ]);
-    echo(include_template('layout.php', [
-        'title' => $title,
-        'is_auth' => $is_auth,
-        'user_name' => $user_name,
-        'categories' => $categories,
-        'content' => $content
-    ]));
+        echo(include_template('layout.php', [
+            'title' => $title,
+            'is_auth' => $is_auth,
+            'user_name' => $user_name,
+            'categories' => $categories,
+            'content' => $content
+        ]));
+    } else {
+        http_response_code(404);
+    }
 } else {
     http_response_code(404);
 }

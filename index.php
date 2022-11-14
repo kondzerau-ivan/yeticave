@@ -10,6 +10,8 @@
 
 require_once('functions/settings.php');
 
+$lots = fetchLots();
+
 $content = include_template('main.php', [
   'categories' => $categories,
   'lots' => $lots

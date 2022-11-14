@@ -8,8 +8,13 @@ require_once('db.php');
 function fetchCategories(): array
 {
     global $connection;
-    $sql = "SELECT symbol, title
-            FROM categories";
+    $sql = "
+            SELECT
+                symbol,
+                title
+            FROM
+                categories
+    ";
     $query = mysqli_query($connection, $sql);
 
     return mysqli_fetch_all($query, MYSQLI_ASSOC);
@@ -22,12 +27,53 @@ function fetchCategories(): array
 function fetchLots(): array
 {
     global $connection;
-    $sql = "SELECT lots.id, lots.title, lots.start_price AS price, lots.image_url AS image, lots.finished_at, categories.title AS category
-            FROM lots INNER JOIN categories ON lots.category_id = categories.id
-            WHERE lots.finished_at > NOW()
-            ORDER BY lots.finished_at DESC
-            LIMIT 3";
+    $sql = "
+            SELECT
+                lots.id,
+                lots.title,
+                lots.start_price AS price,
+                lots.image_url AS image,
+                lots.finished_at,
+                categories.title AS category
+            FROM
+                lots
+            INNER JOIN categories ON
+                lots.category_id = categories.id
+            WHERE
+                lots.finished_at > NOW()
+            ORDER BY
+                lots.finished_at DESC
+            LIMIT 3
+    ";
     $query = mysqli_query($connection, $sql);
 
     return mysqli_fetch_all($query, MYSQLI_ASSOC);
+}
+
+/**
+ * Use to get Lot By ID
+ * @return array - Lot info
+ */
+function fetchLotById(int $id): array
+{
+    global $connection;
+    $sql = "
+            SELECT
+                lots.title,
+                lots.description,
+                lots.start_price AS price,
+                lots.bet_range,
+                lots.image_url AS image,
+                lots.finished_at,
+                categories.title AS category
+            FROM
+                lots
+            JOIN categories ON
+                lots.category_id = categories.id
+            WHERE
+                lots.id = $id
+    ";
+    $query = mysqli_query($connection, $sql);
+
+    return mysqli_fetch_array($query, MYSQLI_ASSOC);
 }
