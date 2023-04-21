@@ -57,23 +57,41 @@ function fetchLots(): array
 function fetchLotById(int $id): array
 {
     global $connection;
-    $sql = "
-            SELECT
-                lots.title,
-                lots.description,
-                lots.start_price AS price,
-                lots.bet_range,
-                lots.image_url AS image,
-                lots.finished_at,
-                categories.title AS category
-            FROM
-                lots
-            JOIN categories ON
-                lots.category_id = categories.id
-            WHERE
-                lots.id = $id
-    ";
-    $query = mysqli_query($connection, $sql);
 
-    return mysqli_fetch_array($query, MYSQLI_ASSOC);
+    $sql_check_id = "
+                SELECT
+                    lots.id
+                FROM
+                    lots
+                WHERE
+                    lots.id = $id;
+    ";
+
+    $query_check_id = mysqli_query($connection, $sql_check_id);
+
+    $result_check_id = mysqli_fetch_array($query_check_id, MYSQLI_ASSOC);
+
+    if ($result_check_id) {
+        $sql = "
+                SELECT
+                    lots.title,
+                    lots.description,
+                    lots.start_price AS price,
+                    lots.bet_range,
+                    lots.image_url AS image,
+                    lots.finished_at,
+                    categories.title AS category
+                FROM
+                    lots
+                JOIN categories ON
+                    lots.category_id = categories.id
+                WHERE
+                    lots.id = $id
+        ";
+        $query = mysqli_query($connection, $sql);
+
+        return mysqli_fetch_array($query, MYSQLI_ASSOC);
+    } else {
+        return [];
+    }
 }
