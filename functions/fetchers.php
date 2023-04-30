@@ -95,3 +95,25 @@ function fetchLotById(int $id): array
         return [];
     }
 }
+
+
+/**
+ * Use to get values from POST request
+ */
+
+ function fetchPostValue(string $name) {
+    if (isset($_POST)) {
+        return $_POST[$name] ?? '';
+    } else return '';
+ }
+
+ /**
+  * Use to get file PATH 
+  */
+
+function fetchFilePath(string $name): string
+{
+    if (isset($_FILES[$name])) {
+        return $_FILES[$name]['full_path'] ?? '';
+    } else return '';
+}
