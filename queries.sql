@@ -1,3 +1,4 @@
+-- Добавление категорий товаров
 INSERT INTO categories (name, code)
 VALUES ('Доски и лыжи', 'boards'),
     ('Крепления', 'attachment'),
@@ -5,6 +6,8 @@ VALUES ('Доски и лыжи', 'boards'),
     ('Одежда', 'clothing'),
     ('Инструменты', 'tools'),
     ('Разное', 'other');
+
+-- Добавление пользователей
 INSERT INTO users (email, name, password, contacts)
 VALUES (
         'stark@gmail.com',
@@ -18,6 +21,8 @@ VALUES (
         '666666',
         '+000666000'
     );
+
+-- Добавление лотов (товаров)
 INSERT INTO lots (
         name,
         description,
@@ -88,6 +93,51 @@ VALUES (
         2,
         6
     );
+
+-- Добавление ставок пользователей на лоты
 INSERT INTO bets (amount, user_id, lot_id)
 VALUES (5900, 1, 6),
     (11099, 2, 1);
+
+-- Получение списка категорий
+SELECT code, name
+FROM categories;
+
+-- Получение 3 последних активных лотов с их категориями
+SELECT
+    l.name AS lot_name,
+    l.price AS start_price,
+    l.image,
+    c.name AS category_name
+FROM lots AS l
+JOIN categories AS c
+ON c.id = l.category_id
+WHERE l.expiration_date > NOW()
+ORDER BY l.created_at DESC
+LIMIT 3;
+
+-- Получение информации о конкретном лоте по его id
+SELECT 
+    l.name AS lot_name,
+    l.price AS start_price,
+    l.image,
+    c.name AS category_name
+FROM lots AS l
+JOIN categories AS c
+ON c.id = l.categoriy_id
+WHERE l.id = ?;
+
+-- Обновление названия лота по его id
+UPDATE lots
+SET name =  ?
+WHERE id = ?;
+
+-- Получение истории ставок по конкретному лоту
+SELECT b.created_at, b.amount, u.name
+FROM bets AS b
+JOIN lots AS l
+ON l.id = b.lot_id
+JOIN users AS u
+ON u.id = b.user_id
+WHERE l.id = ?
+ORDER BY b.created_at DESC;
