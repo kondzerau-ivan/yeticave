@@ -32,3 +32,50 @@ function getDateRange(string $expiration_date): array
 
     return [$hours, $minutes];
 }
+
+/**
+ * Возвращает 6 новых лотов
+ * @param mysqli $con Ресурс подключения к базе данных
+ * @return array Массив лотов
+ */
+function fetchLots(mysqli $con): array
+{
+    $sql = '
+        SELECT
+        l.name AS lot_name,
+        l.price AS start_price,
+        l.image,
+        l.expiration_date,
+        c.name AS category_name
+        FROM lots AS l
+        JOIN categories AS c
+        ON c.id = l.category_id
+        WHERE l.expiration_date > NOW()
+        ORDER BY l.created_at DESC
+        LIMIT 6;
+    ';
+    $result = mysqli_query($con, $sql);
+    if (!$result) {
+        throw new Exception("Ошибка запроса: " . mysqli_error($con));
+    }
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+/**
+ * Возвращает список категорий
+ * @param mysqli $con Ресурс подключения к базе данных
+ * @return array Массив категорий
+ */
+function fetchCategories($con): array
+{
+    $sql = '
+        SELECT code, name
+        FROM categories;
+    ';
+
+    $result = mysqli_query($con, $sql);
+    if (!$result) {
+        throw new Exception("Ошибка запроса: " . mysqli_error($con));
+    }
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
