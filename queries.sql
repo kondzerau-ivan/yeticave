@@ -124,7 +124,7 @@ SELECT
     c.name AS category_name
 FROM lots AS l
 JOIN categories AS c
-ON c.id = l.categoriy_id
+ON c.id = l.category_id
 WHERE l.id = ?;
 
 -- Обновление названия лота по его id

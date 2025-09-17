@@ -42,6 +42,7 @@ function fetchLots(mysqli $con): array
 {
     $sql = '
         SELECT
+        l.id,
         l.name AS lot_name,
         l.price AS start_price,
         l.image,
@@ -59,6 +60,73 @@ function fetchLots(mysqli $con): array
         throw new Exception("Ошибка запроса: " . mysqli_error($con));
     }
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+/**
+ * Проверяет существует ли лот с заданным ID
+ * @param mysqli $con Ресурс подключения к базе данных
+ * @param $id Предполагаемый ID лота
+ * @return bool Результат запроса
+ */
+
+function lotExistsById(mysqli $con, int $id): bool
+{
+    $sql = '
+        SELECT 1
+        FROM lots
+        WHERE id = ?
+        LIMIT 1;
+    ';
+
+    $stmt = mysqli_prepare($con, $sql);
+    if (!$stmt) {
+        throw new Exception("Ошибка подготовки запроса: " . mysqli_error($con));
+    }
+    mysqli_stmt_bind_param($stmt, 'i', $id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $result = mysqli_fetch_row($result);
+    if ($result) {
+        return true;
+    } else return false ;
+}
+
+
+/**
+ * Возвращает лот по его ID
+ * @param mysqli $con Ресурс подключения к базе данных
+ * @param int $id Идентификатор лота
+ * @return array Информация о лоте
+ */
+
+function fetchLotById($con, $id): array
+{
+    $sql = '
+        SELECT 
+        l.name AS lot_name,
+        l.price AS start_price,
+        l.image,
+        l.description,
+        l.expiration_date,
+        l.step,
+        c.name AS category_name
+        FROM lots AS l
+        JOIN categories AS c
+        ON c.id = l.category_id
+        WHERE l.id = ?;
+    ';
+
+    $stmt = mysqli_prepare($con, $sql);
+    if (!$stmt) {
+        throw new Exception("Ошибка подготовки запроса: " . mysqli_error($con));
+    }
+    mysqli_stmt_bind_param($stmt, 'i', $id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    if (!$result) {
+        throw new Exception("Ошибка выполнения: " . mysqli_error($con));
+    }
+    return mysqli_fetch_assoc($result);
 }
 
 /**
