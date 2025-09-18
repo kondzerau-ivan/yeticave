@@ -63,9 +63,9 @@ function fetchLots(mysqli $con): array
 }
 
 /**
- * Проверяет существует ли лот с заданным ID
+ * Проверяет, существует ли лот с заданным ID
  * @param mysqli $con Ресурс подключения к базе данных
- * @param $id Предполагаемый ID лота
+ * @param int $id Предполагаемый ID лота
  * @return bool Результат запроса
  */
 
@@ -82,13 +82,20 @@ function lotExistsById(mysqli $con, int $id): bool
     if (!$stmt) {
         throw new Exception("Ошибка подготовки запроса: " . mysqli_error($con));
     }
+
     mysqli_stmt_bind_param($stmt, 'i', $id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $result = mysqli_fetch_row($result);
-    if ($result) {
-        return true;
-    } else return false ;
+
+    if (!mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        throw new Exception("Ошибка выполнения запроса: " . mysqli_error($con));
+    }
+
+    mysqli_stmt_bind_result($stmt, $exists);
+    $result = mysqli_stmt_fetch($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    return (bool) $result;
 }
 
 
@@ -96,10 +103,10 @@ function lotExistsById(mysqli $con, int $id): bool
  * Возвращает лот по его ID
  * @param mysqli $con Ресурс подключения к базе данных
  * @param int $id Идентификатор лота
- * @return array Информация о лоте
+ * @return array|null Информация о лоте или null, если не найден
  */
 
-function fetchLotById($con, $id): array
+function fetchLotById(mysqli $con, int $id): array|null
 {
     $sql = '
         SELECT 
@@ -113,20 +120,30 @@ function fetchLotById($con, $id): array
         FROM lots AS l
         JOIN categories AS c
         ON c.id = l.category_id
-        WHERE l.id = ?;
+        WHERE l.id = ?
+        LIMIT 1;
     ';
 
     $stmt = mysqli_prepare($con, $sql);
     if (!$stmt) {
         throw new Exception("Ошибка подготовки запроса: " . mysqli_error($con));
     }
+
     mysqli_stmt_bind_param($stmt, 'i', $id);
-    mysqli_stmt_execute($stmt);
+    if (!mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        throw new Exception("Ошибка выполнения запроса: " . mysqli_error($con));
+    }
+
     $result = mysqli_stmt_get_result($stmt);
     if (!$result) {
         throw new Exception("Ошибка выполнения: " . mysqli_error($con));
     }
-    return mysqli_fetch_assoc($result);
+
+    $row = mysqli_fetch_assoc($result);
+    mysqli_stmt_close($stmt);
+
+    return $row ?: null;
 }
 
 /**
@@ -134,7 +151,7 @@ function fetchLotById($con, $id): array
  * @param mysqli $con Ресурс подключения к базе данных
  * @return array Массив категорий
  */
-function fetchCategories($con): array
+function fetchCategories(mysqli $con): array
 {
     $sql = '
         SELECT code, name
