@@ -1,12 +1,7 @@
 <?php
-date_default_timezone_set('Europe/Minsk');
-require_once __DIR__ . '/db.php';
-require_once __DIR__ . '/functions.php';
-require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/configs/settings.php';
 
 $title = 'Главная';
-$is_auth = rand(0, 1);
-$user_name = 'Иван';
 $lots = fetchLots($con);
 $categories = fetchCategories($con);
 
