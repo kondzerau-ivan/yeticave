@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/configs/settings.php';
 
-$title = 'Главная';
+$title = '404';
 $categories = fetchCategories($con);
 
 $content = include_template('404.php', [

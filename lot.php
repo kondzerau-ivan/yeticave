@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/configs/settings.php';
 
-$title = 'Главная';
+$title = 'Лот';
 $categories = fetchCategories($con);
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
