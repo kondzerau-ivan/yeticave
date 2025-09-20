@@ -164,3 +164,12 @@ function fetchCategories(mysqli $con): array
     }
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
+
+/**
+ * @param string $name Имя поля
+ * @return string Значение поля или пустая строка
+ */
+function getPostVal($name)
+{
+    return isset($_POST[$name]) ? htmlspecialchars($_POST[$name]) : "";
+}
