@@ -15,11 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    $content = include_template('add.php', [
-        'categories' => $categories,
-        'getPostVal' => fn($name) => getPostVal($name),
-        'errors' => array_filter($errors)
-    ]);
+    if (empty($errors)) {
+        header("Location: /lot.php");
+    } else {
+        $content = include_template('add.php', [
+            'categories' => $categories,
+            'getPostVal' => fn($name) => getPostVal($name),
+            'errors' => array_filter($errors)
+        ]);
+    }
 } else {
     $content = include_template('add.php', [
         'categories' => $categories,

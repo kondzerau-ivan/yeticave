@@ -9,7 +9,7 @@ function validateEmail($name)
 function validateFilled($name)
 {
     if (empty($_POST[$name])) {
-        return "Это поле должно быть заполнено";
+        return "Это поле должно быть заполнено.";
     }
 }
 
