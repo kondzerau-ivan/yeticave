@@ -8,10 +8,9 @@ $categories = fetchCategories($con);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors = [];
 
-    foreach ($rules as $key => $value) {
+    foreach ($rules as $key => $rule) {
         if (isset($_POST[$key])) {
-            $rule = $rules[$key];
-            $errors[$key] = $rule($key);
+            $errors[$key] = array_filter($rule($key));
         }
     }
 

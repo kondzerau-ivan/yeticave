@@ -173,3 +173,14 @@ function getPostVal($name)
 {
     return isset($_POST[$name]) ? htmlspecialchars($_POST[$name]) : "";
 }
+
+function renderErrorsMessage(array $errors, string $name): string
+{
+    if (!isset($errors[$name])) {
+        return '';
+    }
+
+    $messages = (array) $errors[$name];
+
+    return implode('<br>', array_map('htmlspecialchars', $messages));
+}
