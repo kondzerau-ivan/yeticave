@@ -14,7 +14,7 @@
             <div class="form__item<?= isset($errors['lot-name']) ? ' form__item--invalid' : ''; ?>">
                 <label for="lot-name">Наименование <sup>*</sup></label>
                 <input id="lot-name" type="text" name="lot-name" value="<?= getPostVal('lot-name') ?>" placeholder="Введите наименование лота">
-                <span class="form__error"><?= renderErrorsMessage($errors, 'lot-name'); ?></span>
+                <span class="form__error"><?= isset($errors) ? renderErrorsMessage($errors, 'lot-name') : ''; ?></span>
             </div>
             <div class="form__item<?= isset($errors['category']) ? ' form__item--invalid' : ''; ?>">
                 <label for="category">Категория <sup>*</sup></label>
@@ -24,13 +24,13 @@
                         <option value="<?= htmlspecialchars($category['code']); ?>" <?= getPostVal('category') == $category['code'] ? 'selected' : ''; ?>><?= htmlspecialchars($category['name']); ?></option>
                     <?php endforeach; ?>
                 </select>
-                <span class="form__error"><?= renderErrorsMessage($errors, 'category'); ?></span>
+                <span class="form__error"><?= isset($errors) ? renderErrorsMessage($errors, 'category') : ''; ?></span>
             </div>
         </div>
         <div class="form__item form__item--wide<?= isset($errors['message']) ? ' form__item--invalid' : ''; ?>">
             <label for="message">Описание <sup>*</sup></label>
             <textarea id="message" name="message" placeholder="Напишите описание лота"><?= getPostVal('message'); ?></textarea>
-            <span class="form__error"><?= renderErrorsMessage($errors, 'message'); ?></span>
+            <span class="form__error"><?= isset($errors) ? renderErrorsMessage($errors, 'message') : ''; ?></span>
         </div>
         <div class="form__item form__item--file">
             <label for="lot-img">Изображение <sup>*</sup></label>
@@ -45,17 +45,17 @@
             <div class="form__item form__item--small<?= isset($errors['lot-rate']) ? ' form__item--invalid' : ''; ?>">
                 <label for="lot-rate">Начальная цена <sup>*</sup></label>
                 <input id="lot-rate" type="text" name="lot-rate" placeholder="0" value="<?= getPostVal('lot-rate'); ?>">
-                <span class="form__error"><?= renderErrorsMessage($errors, 'lot-rate'); ?></span>
+                <span class="form__error"><?= isset($errors) ? renderErrorsMessage($errors, 'lot-rate') : ''; ?></span>
             </div>
             <div class="form__item form__item--small<?= isset($errors['lot-step']) ? ' form__item--invalid' : ''; ?>">
                 <label for="lot-step">Шаг ставки <sup>*</sup></label>
                 <input id="lot-step" type="text" name="lot-step" placeholder="0" value="<?= getPostVal('lot-step'); ?>">
-                <span class="form__error"><?= renderErrorsMessage($errors, 'lot-step'); ?></span>
+                <span class="form__error"><?= isset($errors) ? renderErrorsMessage($errors, 'lot-step') : ''; ?></span>
             </div>
             <div class="form__item<?= isset($errors['lot-date']) ? ' form__item--invalid' : ''; ?>">
                 <label for="lot-date">Дата окончания торгов <sup>*</sup></label>
                 <input class="form__input-date" id="lot-date" type="text" name="lot-date" value="<?= getPostVal('lot-date'); ?>" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
-                <span class="form__error"><?= renderErrorsMessage($errors, 'lot-date'); ?></span>
+                <span class="form__error"><?= isset($errors) ? renderErrorsMessage($errors, 'lot-date') : ''; ?></span>
             </div>
         </div>
         <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
