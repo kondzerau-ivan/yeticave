@@ -20,7 +20,7 @@ function is_date_valid(string $date): bool
     $dateTimeObj = date_create_from_format($format_to_check, $date);
 
     $errors = date_get_last_errors();
-    $hasErrors = is_array($errors) && array_sum($errors) > 0;
+    $hasErrors = is_array($errors) && $errors['error_count'] > 0;
 
     return $dateTimeObj !== false && !$hasErrors;
 }

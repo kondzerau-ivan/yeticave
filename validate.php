@@ -119,6 +119,30 @@ function isDateFormatValid(string $name): ?string
     return null;
 }
 
+/**
+ * Проверяет тип загружаемого файла
+ * 
+ * @param string $name Имя поля
+ * @return string|null Сообщение об ошибке или null
+ */
+function validateFile(string $name): ?string
+{
+    $allowed = ['image/jpeg', 'image/png'];
+    if (isset($_FILES['image']) && is_uploaded_file($_FILES[$name]['tmp_name'])) {
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $type = finfo_file($finfo, $_FILES[$name]['tmp_name']) ?? '';
+        finfo_close($finfo);
+
+        if (!in_array($type, $allowed, true)) {
+            return "Файл должен быть изображением.";
+        } else {
+            return null;
+        }
+    } else {
+        return "Загрузка изображения является обязательной.";
+    }
+}
+
 $rules = [
     'lot-name' => fn($key) => [
         validateFilled($key),
@@ -129,6 +153,9 @@ $rules = [
     ],
     'message' => fn($key) => [
         validateFilled($key)
+    ],
+    'image' => fn($key) => [
+        validateFile($key)
     ],
     'lot-rate' => fn($key) => [
         validateFilled($key),

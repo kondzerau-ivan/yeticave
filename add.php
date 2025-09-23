@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors = [];
 
     foreach ($rules as $key => $rule) {
-        if (isset($_POST[$key])) {
+        if (isset($_POST[$key]) || isset($_FILES[$key])) {
             $errors[$key] = array_filter($rule($key));
         }
     }

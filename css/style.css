@@ -915,6 +915,10 @@ input:invalid .form__error{
   color: #fff;
 }
 
+.form__item--invalid .form__input-file label {
+    border-color: #f84646;
+}
+
 /* Страница лота */
 
 .lot-item {

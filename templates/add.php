@@ -8,7 +8,7 @@
             <?php endforeach; ?>
         </ul>
     </nav>
-    <form class="form form--add-lot container <?= !empty($errors) ? 'form--invalid' : ''; ?>" action="/add.php" method="post">
+    <form class="form form--add-lot container <?= !empty($errors) ? 'form--invalid' : ''; ?>" action="/add.php" method="post" enctype="multipart/form-data">
         <h2>Добавление лота</h2>
         <div class="form__container-two">
             <div class="form__item<?= isset($errors['lot-name']) ? ' form__item--invalid' : ''; ?>">
@@ -32,7 +32,7 @@
             <textarea id="message" name="message" placeholder="Напишите описание лота"><?= getPostVal('message'); ?></textarea>
             <span class="form__error"><?= isset($errors) ? renderErrorsMessage($errors, 'message') : ''; ?></span>
         </div>
-        <div class="form__item form__item--file">
+        <div class="form__item form__item--file<?= isset($errors['image']) ? ' form__item--invalid' : ''; ?>">
             <label for="lot-img">Изображение <sup>*</sup></label>
             <div class="form__input-file">
                 <input class="visually-hidden" name="image" type="file" id="lot-img" value="">
@@ -40,6 +40,7 @@
                     Добавить
                 </label>
             </div>
+            <span class="form__error"><?= isset($errors) ? renderErrorsMessage($errors, 'image') : ''; ?></span>
         </div>
         <div class="form__container-three">
             <div class="form__item form__item--small<?= isset($errors['lot-rate']) ? ' form__item--invalid' : ''; ?>">
