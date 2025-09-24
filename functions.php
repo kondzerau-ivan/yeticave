@@ -154,7 +154,7 @@ function fetchLotById(mysqli $con, int $id): array|null
 function fetchCategories(mysqli $con): array
 {
     $sql = '
-        SELECT code, name
+        SELECT *
         FROM categories;
     ';
 
@@ -167,11 +167,19 @@ function fetchCategories(mysqli $con): array
 
 /**
  * @param string $name Имя поля
- * @return string Значение поля или пустая строка
+ * @return array Значение поля или пустая строка
  */
-function getPostVal($name)
+function getLotPostData(): array
 {
-    return isset($_POST[$name]) ? htmlspecialchars($_POST[$name]) : "";
+    return [
+        'lot-name' => $_POST['lot-name'] ?? '',
+        'message' => $_POST['message'] ?? '',
+        'lot-rate' => $_POST['lot-rate'] ?? '',
+        'lot-date' => $_POST['lot-date'] ?? '',
+        'lot-step' => $_POST['lot-step'] ?? '',
+        'category' => $_POST['category'] ?? '',
+        'author_id' => 1,
+    ];
 }
 
 function renderErrorsMessage(array $errors, string $name): string
@@ -183,4 +191,82 @@ function renderErrorsMessage(array $errors, string $name): string
     $messages = (array) $errors[$name];
 
     return implode('<br>', array_map('htmlspecialchars', $messages));
+}
+
+function generateUniqueFileName(string $originalName): string
+{
+    $ext = pathinfo($originalName, PATHINFO_EXTENSION);
+    $base = pathinfo($originalName, PATHINFO_FILENAME);
+    $safeBase = preg_replace('/[^a-zA-Z0-9_\.-]/', '_', $base);
+
+    return $safeBase . '_' . bin2hex(random_bytes(8)) . '.' . $ext;
+}
+
+function getUploadedFileName($field): string
+{
+    if (!isset($_FILES[$field]['name'])) {
+        return '';
+    }
+    $originalName = $_FILES[$field]['name'];
+    $uniqueName = generateUniqueFileName($originalName);
+    $destination = __DIR__ . '/uploads/';
+
+    move_uploaded_file($_FILES[$field]['tmp_name'], $destination . $uniqueName);
+
+    return $uniqueName;
+}
+
+function addNewLot(mysqli $con, string $image_name): int
+{
+    $name = $_POST['lot-name'];
+    $description = $_POST['message'];
+    $image = $image_name;
+    $price = $_POST['lot-rate'];
+    $expiration_date = $_POST['lot-date'];
+    $step = $_POST['lot-step'];
+    $category_id = $_POST['category'];
+    $author_id = 1;
+
+    $sql = "
+        INSERT INTO lots (
+            name,
+            description,
+            image,
+            price,
+            expiration_date,
+            step,
+            author_id,
+            category_id
+        )
+        VALUES (
+            ?, ?, ?, ?, ?, ?, ?, ?
+        )
+    ";
+
+    $stmt = mysqli_prepare($con, $sql);
+    if (!$stmt) {
+        throw new Exception("Ошибка подготовки запроса: " . mysqli_error($con));
+    }
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        'sssisiii',
+        $name,
+        $description,
+        $image,
+        $price,
+        $expiration_date,
+        $step,
+        $author_id,
+        $category_id
+    );
+
+    if (!mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        throw new Exception("Ошибка выполнения запроса: " . mysqli_error($con));
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return mysqli_insert_id($con);
 }
