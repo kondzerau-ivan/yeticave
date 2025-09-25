@@ -23,10 +23,10 @@ function validateFilled(string $value): ?string
 
 function validateCategory(string $id, array $list): ?string
 {
-    if(!in_array($id, $list)) {
+    if (!in_array($id, $list)) {
         return "Нужно указать существующую категорию.";
     }
-    
+
     return null;
 }
 
@@ -125,4 +125,22 @@ function validateDateFormat(string $lot_date): ?string
     }
 
     return null;
+}
+
+function validateFile(array $file_data): ?string
+{
+    if (!empty($file_data['name'])) {
+        $fallowed = ['image/jpeg', 'image/png'];
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $ftype = finfo_file($finfo, $file_data['tmp_name']);
+        finfo_close($finfo);
+
+        if (!in_array($ftype, $fallowed, true)) {
+            return "Файл должен быть изображением (jpeg/png).";
+        } else {
+            return null;
+        }
+    } else {
+        return "Загрузка изображения обязательна.";
+    }
 }

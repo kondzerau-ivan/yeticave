@@ -19,9 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'message' => fn($value) => [
             validateFilled($value)
         ],
-        // 'image' => fn($key) => [
-        //     validateFile($key)
-        // ],
+        'image' => fn($value) => [
+            validateFile($value)
+        ],
         'lot-rate' => fn($value) => [
             validateFilled($value),
             validatePrice($value)
@@ -44,31 +44,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($lot as $field => $value) {
         if (isset($rules[$field])) {
             $rule = $rules[$field];
-            $errors[$field] = array_filter($rule($value));
+            $fieldErrors = array_filter($rule($value));
+            if (!empty($fieldErrors)) {
+                $errors[$field] = $fieldErrors;
+            }
         }
-    }
-
-    if (!empty($_FILES['image']['name'])) {
-        $fallowed = ['image/jpeg', 'image/png'];
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $ftype = finfo_file($finfo, $_FILES['image']['tmp_name']);
-        finfo_close($finfo);
-
-        if (!in_array($ftype, $fallowed, true)) {
-            $errors['image'] = "Файл должен быть изображением (jpeg/png).";
-        }else {
-            [$fname, $fext] = explode('.', $_FILES['image']['name']);
-            $fname = $fname . '__' . uniqid() . '.' . $fext;
-            $fpath = __DIR__ . '/uploads/';
-            move_uploaded_file($_FILES['image']['tmp_name'], $fpath . $fname);
-        }
-    } else {
-        $errors['image'] = "Загрузка изображения обязательна.";
     }
 
     if (empty($errors)) {
-        var_dump('ОШИБОК НЕТ');
-        // header("Location: /lot.php?id={$id}");
+        $id = addNewLot($con);
+        header("Location: /lot.php?id={$id}");
     } else {
         $content = include_template('add.php', [
             'categories' => $categories,

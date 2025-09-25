@@ -166,6 +166,7 @@ function fetchCategories(mysqli $con): array
 }
 
 /**
+ * Возвращает данные Лота из массива $POST
  * @param string $name Имя поля
  * @return array Значение поля или пустая строка
  */
@@ -174,6 +175,7 @@ function getLotPostData(): array
     return [
         'lot-name' => $_POST['lot-name'] ?? '',
         'message' => $_POST['message'] ?? '',
+        'image' => $_FILES['image'] ?? [],
         'lot-rate' => $_POST['lot-rate'] ?? '',
         'lot-date' => $_POST['lot-date'] ?? '',
         'lot-step' => $_POST['lot-step'] ?? '',
@@ -193,34 +195,20 @@ function renderErrorsMessage(array $errors, string $name): string
     return implode('<br>', array_map('htmlspecialchars', $messages));
 }
 
-function generateUniqueFileName(string $originalName): string
+function fileUpload(): string
 {
-    $ext = pathinfo($originalName, PATHINFO_EXTENSION);
-    $base = pathinfo($originalName, PATHINFO_FILENAME);
-    $safeBase = preg_replace('/[^a-zA-Z0-9_\.-]/', '_', $base);
-
-    return $safeBase . '_' . bin2hex(random_bytes(8)) . '.' . $ext;
+    [$fname, $fext] = explode('.', $_FILES['image']['name']);
+    $fname = $fname . '__' . uniqid() . '.' . $fext;
+    $fpath = __DIR__ . '/uploads/';
+    move_uploaded_file($_FILES['image']['tmp_name'], $fpath . $fname);
+    return $fname;
 }
 
-function getUploadedFileName($field): string
-{
-    if (!isset($_FILES[$field]['name'])) {
-        return '';
-    }
-    $originalName = $_FILES[$field]['name'];
-    $uniqueName = generateUniqueFileName($originalName);
-    $destination = __DIR__ . '/uploads/';
-
-    move_uploaded_file($_FILES[$field]['tmp_name'], $destination . $uniqueName);
-
-    return $uniqueName;
-}
-
-function addNewLot(mysqli $con, string $image_name): int
+function addNewLot(mysqli $con): int
 {
     $name = $_POST['lot-name'];
     $description = $_POST['message'];
-    $image = $image_name;
+    $image = fileUpload();
     $price = $_POST['lot-rate'];
     $expiration_date = $_POST['lot-date'];
     $step = $_POST['lot-step'];
