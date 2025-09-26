@@ -180,7 +180,17 @@ function getLotPostData(): array
         'lot-date' => $_POST['lot-date'] ?? '',
         'lot-step' => $_POST['lot-step'] ?? '',
         'category' => $_POST['category'] ?? '',
-        'author_id' => 1,
+        'author_id' => 1
+    ];
+}
+
+function getUserPostData(): array
+{
+    return [
+        'email' => $_POST['email'] ?? '',
+        'password' => $_POST['password'] ?? '',
+        'name' => $_POST['name'] ?? '',
+        'message' => $_POST['message'] ?? ''
     ];
 }
 
@@ -204,15 +214,15 @@ function fileUpload(): string
     return $fname;
 }
 
-function addNewLot(mysqli $con): int
+function addNewLot(mysqli $con, array $lot): int
 {
-    $name = $_POST['lot-name'];
-    $description = $_POST['message'];
+    $name = $lot['lot-name'];
+    $description = $lot['message'];
     $image = fileUpload();
-    $price = $_POST['lot-rate'];
-    $expiration_date = $_POST['lot-date'];
-    $step = $_POST['lot-step'];
-    $category_id = $_POST['category'];
+    $price = $lot['lot-rate'];
+    $expiration_date = $lot['lot-date'];
+    $step = $lot['lot-step'];
+    $category_id = $lot['category'];
     $author_id = 1;
 
     $sql = "
@@ -257,4 +267,45 @@ function addNewLot(mysqli $con): int
     mysqli_stmt_close($stmt);
 
     return mysqli_insert_id($con);
+}
+
+function addNewUser(mysqli $con, array $user): void
+{
+    $email = $user['email'];
+    $password = password_hash($user['password'], PASSWORD_DEFAULT);
+    $name = $user['name'];
+    $contacts = $user['message'];
+
+    $sql = "
+        INSERT INTO users (
+            email,
+            password,
+            name,
+            contacts
+        )
+        VALUES (
+            ?, ?, ?, ?
+        )
+    ";
+
+    $stmt = mysqli_prepare($con, $sql);
+    if (!$stmt) {
+        throw new Exception("Ошибка подготовки запроса: " . mysqli_error($con));
+    }
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        'ssss',
+        $email,
+        $password,
+        $name,
+        $contacts
+    );
+
+    if (!mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        throw new Exception("Ошибка выполнения запроса: " . mysqli_error($con));
+    }
+
+    mysqli_stmt_close($stmt);
 }

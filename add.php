@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        $id = addNewLot($con);
+        $id = addNewLot($con, $lot);
         header("Location: /lot.php?id={$id}");
     } else {
         $content = include_template('add.php', [

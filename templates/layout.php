@@ -27,7 +27,7 @@
                 <a class="main-header__add-lot button" href="/add.php">Добавить лот</a>
 
                 <nav class="user-menu">
-                    <?php if ($is_auth) : ?>
+                    <?php if (isset($is_auth) && $is_auth) : ?>
                         <div class="user-menu__logged">
                             <p><?= htmlspecialchars($user_name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); ?></p>
                             <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
@@ -36,7 +36,7 @@
                     <?php else : ?>
                         <ul class="user-menu__list">
                             <li class="user-menu__item">
-                                <a href="#">Регистрация</a>
+                                <a href="/sign-up.php">Регистрация</a>
                             </li>
                             <li class="user-menu__item">
                                 <a href="#">Вход</a>

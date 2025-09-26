@@ -33,13 +33,75 @@ function validateCategory(string $id, array $list): ?string
 /**
  * Проверяет корректность email в POST-запросе.
  *
- * @param string $name Имя поля
+ * @param string $value Значение для валидации
  * @return string|null Сообщение об ошибке или null
  */
-function validateEmail(string $name): ?string
+function validateEmail(string $value): ?string
 {
-    if (!filter_input(INPUT_POST, $name, FILTER_VALIDATE_EMAIL)) {
+    if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
         return "Введите корректный email.";
+    }
+
+    return null;
+}
+
+function validateUniqueEmail(mysqli $con, string $value): ?string
+{
+    $sql = '
+        SELECT 1
+        FROM users
+        WHERE email = ?
+        LIMIT 1;
+    ';
+
+    $stmt = mysqli_prepare($con, $sql);
+    if (!$stmt) {
+        throw new Exception("Ошибка подготовки запроса: " . mysqli_error($con));
+    }
+
+    mysqli_stmt_bind_param($stmt, 's', $value);
+
+    if (!mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        throw new Exception("Ошибка выполнения запроса: " . mysqli_error($con));
+    }
+
+    mysqli_stmt_bind_result($stmt, $exists);
+    $result = (bool) mysqli_stmt_fetch($stmt);
+
+    if ($result) {
+        return 'Пользователь с таким e-mail уже существует.';
+    }
+
+    return null;
+}
+
+function validateUniqueName($con, $value): ?string
+{
+    $sql = '
+        SELECT 1
+        FROM users
+        WHERE name = ?
+        LIMIT 1;
+    ';
+
+    $stmt = mysqli_prepare($con, $sql);
+    if (!$stmt) {
+        throw new Exception("Ошибка подготовки запроса: " . mysqli_error($con));
+    }
+
+    mysqli_stmt_bind_param($stmt, 's', $value);
+
+    if (!mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        throw new Exception("Ошибка выполнения запроса: " . mysqli_error($con));
+    }
+
+    mysqli_stmt_bind_result($stmt, $exists);
+    $result = (bool) mysqli_stmt_fetch($stmt);
+
+    if ($result) {
+        return 'Пользователь с таким именем уже существует.';
     }
 
     return null;
@@ -53,11 +115,25 @@ function validateEmail(string $name): ?string
  * @param int $max Максимальная длина
  * @return string|null Сообщение об ошибке или null
  */
-function validateLenght(string $lot_name, int $min, int $max): ?string
+function validateLenght(string $lot_name, int $min = 0, int $max = 0): ?string
 {
     $lenght = strlen($lot_name);
-    if ($lenght < $min or $lenght > $max) {
-        return "Значение должно быть от $min до $max символов.";
+    if ($min && $max) {
+        if ($lenght < $min or $lenght > $max) {
+            return "Значение должно быть от $min до $max символов.";
+        }
+    }
+
+    if ($min && !$max) {
+        if ($lenght < $min) {
+            return "Значение должно быть от $min символов.";
+        }
+    }
+
+    if ($max && !$min) {
+        if ($lenght < $min) {
+            return "Значение должно быть до $max символов.";
+        }
     }
 
     return null;
