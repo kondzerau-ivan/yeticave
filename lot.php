@@ -8,12 +8,14 @@ $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!lotExistsById($con, $id)) {
     http_response_code(404);
     header("Location: /404.php");
+    exit;
 }
 
 $lot = fetchLotById($con, $id);
 
 $content = include_template('lot.php', [
     'categories' => $categories,
+    'is_auth' => $is_auth,
     'lot' => $lot,
 ]);
 

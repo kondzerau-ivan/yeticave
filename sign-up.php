@@ -5,6 +5,11 @@ require_once __DIR__ . '/validate.php';
 $title = "Регистрация";
 $categories = fetchCategories($con);
 
+if ($is_auth) {
+    http_response_code(403);
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rules = [
         'email' => fn($value) => [
@@ -42,10 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         addNewUser($con, $user);
         header("Location: /login.php");
+        exit();
     } else {
         $content = include_template('sign-up.php', [
             'categories' => $categories,
-            'registrationData' => $registrationData,
+            'user' => $user,
             'errors' => array_filter($errors)
         ]);
     }
@@ -57,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 print(include_template('layout.php', [
     'title' => $title,
+    'is_auth' => $is_auth,
     'categories' => $categories,
     'content' => $content
 ]));

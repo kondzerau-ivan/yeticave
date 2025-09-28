@@ -194,6 +194,14 @@ function getUserPostData(): array
     ];
 }
 
+function getLoginPostData(): array
+{
+    return [
+        'email' => $_POST['email'] ?? '',
+        'password' => $_POST['password'] ?? '',
+    ];
+}
+
 function renderErrorsMessage(array $errors, string $name): string
 {
     if (!isset($errors[$name])) {
@@ -223,7 +231,7 @@ function addNewLot(mysqli $con, array $lot): int
     $expiration_date = $lot['lot-date'];
     $step = $lot['lot-step'];
     $category_id = $lot['category'];
-    $author_id = 1;
+    $author_id = $_SESSION['user']['id'];
 
     $sql = "
         INSERT INTO lots (
@@ -308,4 +316,35 @@ function addNewUser(mysqli $con, array $user): void
     }
 
     mysqli_stmt_close($stmt);
+}
+
+function getUserByEmail(mysqli $con, string $email): array|null
+{
+    $sql = '
+        SELECT *
+        FROM users
+        WHERE users.email = ?
+        LIMIT 1;
+    ';
+
+    $stmt = mysqli_prepare($con, $sql);
+    if (!$stmt) {
+        throw new Exception("Ошибка подготовки запроса: " . mysqli_error($con));
+    }
+
+    mysqli_stmt_bind_param($stmt, 's', $email);
+    if (!mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        throw new Exception("Ошибка выполнения запроса: " . mysqli_error($con));
+    }
+
+    $result = mysqli_stmt_get_result($stmt);
+    if (!$result) {
+        throw new Exception("Ошибка выполнения: " . mysqli_error($con));
+    }
+
+    $row = mysqli_fetch_assoc($result);
+    mysqli_stmt_close($stmt);
+
+    return $row ?: null;
 }

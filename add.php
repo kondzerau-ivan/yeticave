@@ -6,6 +6,11 @@ $title = 'Добавить лот';
 $categories = fetchCategories($con);
 $categories_id = array_column($categories, 'id');
 
+if (!$is_auth) {
+    http_response_code(403);
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rules = [
         'lot-name' => fn($value) => [
@@ -54,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $id = addNewLot($con, $lot);
         header("Location: /lot.php?id={$id}");
+        exit;
     } else {
         $content = include_template('add.php', [
             'categories' => $categories,
