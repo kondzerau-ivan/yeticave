@@ -14,6 +14,9 @@
         <div class="lots__header">
             <h2>Открытые лоты</h2>
         </div>
+        <?php if(empty($lots)) : ?>
+            «Ничего не найдено по вашему запросу»
+        <?php else : ?>
         <ul class="lots__list">
             <?php foreach ($lots as $lot) : ?>
                 <li class="lots__item lot">
@@ -37,5 +40,6 @@
                 </li>
             <?php endforeach; ?>
         </ul>
+        <?php endif; ?>
     </section>
 </main>

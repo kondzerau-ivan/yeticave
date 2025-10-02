@@ -3,7 +3,6 @@ require_once __DIR__ . '/configs/settings.php';
 
 $title = 'Главная';
 $lots = fetchLots($con);
-$categories = fetchCategories($con);
 
 $content = include_template('main.php', [
     'categories' => $categories,

@@ -2,7 +2,7 @@
 require_once __DIR__ . '/configs/settings.php';
 
 $title = 'Лот';
-$categories = fetchCategories($con);
+
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
 if (!lotExistsById($con, $id)) {

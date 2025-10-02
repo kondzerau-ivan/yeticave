@@ -3,8 +3,6 @@ require_once __DIR__ . '/configs/settings.php';
 require_once __DIR__ . '/validate.php';
 
 $title = 'Добавить лот';
-$categories = fetchCategories($con);
-$categories_id = array_column($categories, 'id');
 
 if (!$is_auth) {
     http_response_code(403);

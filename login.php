@@ -3,7 +3,6 @@ require_once __DIR__ . '/configs/settings.php';
 require_once __DIR__ . '/validate.php';
 
 $title = 'Вход';
-$categories = fetchCategories($con);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

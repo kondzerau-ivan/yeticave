@@ -3,7 +3,6 @@ require_once __DIR__ . '/configs/settings.php';
 require_once __DIR__ . '/validate.php';
 
 $title = "Регистрация";
-$categories = fetchCategories($con);
 
 if ($is_auth) {
     http_response_code(403);
