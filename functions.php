@@ -146,6 +146,37 @@ function fetchLotById(mysqli $con, int $id): array|null
     return $row ?: null;
 }
 
+function fetchCategoryById(mysqli $con, int $id): array|null
+{
+    $sql = '
+        SELECT *
+        FROM categories AS c
+        WHERE c.id = ?
+        LIMIT 1;
+    ';
+
+    $stmt = mysqli_prepare($con, $sql);
+    if (!$stmt) {
+        throw new Exception("Ошибка подготовки запроса: " . mysqli_error($con));
+    }
+
+    mysqli_stmt_bind_param($stmt, 'i', $id);
+    if (!mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        throw new Exception("Ошибка выполнения запроса: " . mysqli_error($con));
+    }
+
+    $result = mysqli_stmt_get_result($stmt);
+    if (!$result) {
+        throw new Exception("Ошибка выполнения: " . mysqli_error($con));
+    }
+
+    $row = mysqli_fetch_assoc($result);
+    mysqli_stmt_close($stmt);
+
+    return $row ?: null;
+}
+
 /**
  * Возвращает список категорий
  * @param mysqli $con Ресурс подключения к базе данных
@@ -401,6 +432,7 @@ function findLots(mysqli $con, string $words, $limit = 1, $offset = 0): array
 {
     $sql = '
         SELECT
+            l.id AS lot_id,
             l.name AS lot_name,
             l.image,
             l.price,
@@ -422,6 +454,80 @@ function findLots(mysqli $con, string $words, $limit = 1, $offset = 0): array
     }
 
     mysqli_stmt_bind_param($stmt, 'sii', $words, $limit, $offset);
+    if (!mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        throw new Exception("Ошибка выполнения запроса: " . mysqli_error($con));
+    }
+
+    $result = mysqli_stmt_get_result($stmt);
+    if (!$result) {
+        throw new Exception("Ошибка выполнения: " . mysqli_error($con));
+    }
+
+    $lots = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_stmt_close($stmt);
+
+    return $lots ?: [];
+}
+
+function getCountLotsByCategory(mysqli $con, int $id): int
+{
+    $sql = '
+        SELECT l.id
+        FROM lots AS l
+        JOIN categories AS c ON l.category_id = c.id
+        WHERE c.id = ?;
+    ';
+
+    $stmt = mysqli_prepare($con, $sql);
+    if (!$stmt) {
+        throw new Exception("Ошибка подготовки запроса: " . mysqli_error($con));
+    }
+
+    mysqli_stmt_bind_param($stmt, 'i', $id);
+    if (!mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        throw new Exception("Ошибка выполнения запроса: " . mysqli_error($con));
+    }
+
+    $result = mysqli_stmt_get_result($stmt);
+    if (!$result) {
+        throw new Exception("Ошибка выполнения: " . mysqli_error($con));
+    }
+
+    $lots = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_stmt_close($stmt);
+
+    return count($lots);
+}
+
+function findLotsByCategory(mysqli $con, int $id, int $limit = 1, int $offset = 0): array
+{
+    $sql = '
+        SELECT
+            l.id AS lot_id,
+            l.name AS lot_name,
+            l.image,
+            l.price,
+            l.expiration_date,
+            c.name AS category_name,
+            COUNT(b.id) AS bet_count
+        FROM lots AS l
+        JOIN categories AS c ON c.id = l.category_id
+        LEFT JOIN bets AS b ON l.id = b.lot_id
+        WHERE l.category_id = ?
+        GROUP BY l.id
+        ORDER BY l.created_at DESC
+        LIMIT ?
+        OFFSET ?;
+    ';
+
+    $stmt = mysqli_prepare($con, $sql);
+    if (!$stmt) {
+        throw new Exception("Ошибка подготовки запроса: " . mysqli_error($con));
+    }
+
+    mysqli_stmt_bind_param($stmt, 'iii', $id, $limit, $offset);
     if (!mysqli_stmt_execute($stmt)) {
         mysqli_stmt_close($stmt);
         throw new Exception("Ошибка выполнения запроса: " . mysqli_error($con));

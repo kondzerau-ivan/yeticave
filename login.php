@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		exit;
     } else {
         $content = include_template('login.php', [
-            'categories' => $categories,
+            'navigation' => $navigation,
             'errors' => $errors,
             'loginData' => $loginData
         ]);
@@ -58,13 +58,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $content = include_template('login.php', [
-        'categories' => $categories,
+        'navigation' => $navigation
     ]);
 }
 
 print(include_template('layout.php', [
     'title' => $title,
     'is_auth' => $is_auth,
-    'categories' => $categories,
+    'navigation' => $navigation,
     'content' => $content
 ]));

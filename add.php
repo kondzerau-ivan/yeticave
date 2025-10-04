@@ -60,14 +60,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } else {
         $content = include_template('add.php', [
-            'categories' => $categories,
+            'navigation' => $navigation,
             'lot' => $lot,
             'errors' => array_filter($errors)
         ]);
     }
 } else {
     $content = include_template('add.php', [
-        'categories' => $categories,
+        'navigation' => $navigation
     ]);
 }
 
@@ -76,6 +76,6 @@ print(include_template('layout.php', [
     'flatpickr' => true,
     'is_auth' => $is_auth,
     'user_name' => $user_name,
-    'categories' => $categories,
+    'navigation' => $navigation,
     'content' => $content
 ]));

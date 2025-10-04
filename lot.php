@@ -14,7 +14,7 @@ if (!lotExistsById($con, $id)) {
 $lot = fetchLotById($con, $id);
 
 $content = include_template('lot.php', [
-    'categories' => $categories,
+    'navigation' => $navigation,
     'is_auth' => $is_auth,
     'lot' => $lot,
 ]);
@@ -23,6 +23,6 @@ print(include_template('layout.php', [
     'title' => $title,
     'is_auth' => $is_auth,
     'user_name' => $user_name,
-    'categories' => $categories,
+    'navigation' => $navigation,
     'content' => $content
 ]));

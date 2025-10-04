@@ -56,13 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 } else {
     $content = include_template('sign-up.php', [
-        'categories' => $categories,
+        'navigation' => $navigation
     ]);
 }
 
 print(include_template('layout.php', [
     'title' => $title,
     'is_auth' => $is_auth,
-    'categories' => $categories,
+    'navigation' => $navigation,
     'content' => $content
 ]));

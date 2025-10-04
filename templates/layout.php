@@ -53,15 +53,8 @@
     </div>
 
     <footer class="main-footer">
-        <nav class="nav">
-            <ul class="nav__list container">
-                <?php foreach ($categories as $category) : ?>
-                    <li class="nav__item">
-                        <a href="pages/<?= htmlspecialchars($category['code']); ?>-lots.html"><?= htmlspecialchars($category['name']); ?></a>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </nav>
+        <?= $navigation; ?>
+
         <div class="main-footer__bottom container">
             <div class="main-footer__copyright">
                 <p>© 2019, YetiCave</p>

@@ -5,7 +5,7 @@
         <ul class="promo__list">
             <?php foreach ($categories as $category) : ?>
                 <li class="promo__item promo__item--<?= htmlspecialchars($category['code']); ?>">
-                    <a class="promo__link" href="pages/<?= htmlspecialchars($category['code']); ?>-lots.html"><?= htmlspecialchars($category['name']); ?></a>
+                    <a class="promo__link" href="/all-lots.php?category_id=<?= htmlspecialchars($category['id']); ?>"><?= htmlspecialchars($category['name']); ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>

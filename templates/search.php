@@ -1,13 +1,6 @@
 <main>
-    <nav class="nav">
-        <ul class="nav__list container">
-            <?php foreach ($categories as $category) : ?>
-                <li class="nav__item">
-                    <a href="all-lots.html"><?= htmlspecialchars($category['name']); ?></a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </nav>
+    <?= $navigation; ?>
+    
     <div class="container">
         <section class="lots">
             <?php if (empty($lots)) : ?>
@@ -22,7 +15,7 @@
                             </div>
                             <div class="lot__info">
                                 <span class="lot__category"><?= htmlspecialchars($lot['category_name']); ?></span>
-                                <h3 class="lot__title"><a class="text-link" href="lot.html"><?= htmlspecialchars($lot['lot_name']); ?></a></h3>
+                                <h3 class="lot__title"><a class="text-link" href="/lot.php?id=<?= $lot['lot_id']; ?>"><?= htmlspecialchars($lot['lot_name']); ?></a></h3>
                                 <div class="lot__state">
                                     <div class="lot__rate">
                                         <?php if ($lot['bet_count']) : ?>
@@ -59,12 +52,6 @@
                 <li class="pagination-item pagination-item-next">
                     <a <?php if ($currentPage < $pagesCount) : ?> href="/search.php?search=<?= $searchTarget; ?>&page=<?= $currentPage + 1; ?>" <?php endif; ?>>Вперед</a>
                 </li>
-
-                <!-- 
-            <li class="pagination-item pagination-item-active"><a>1</a></li>
-            <li class="pagination-item"><a href="#">3</a></li>
-            <li class="pagination-item"><a href="#">4</a></li>
-             -->
             </ul>
         <?php endif; ?>
     </div>

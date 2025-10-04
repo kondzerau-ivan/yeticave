@@ -7,6 +7,9 @@ require_once __DIR__ . '/../helpers.php';
 
 $categories = fetchCategories($con);
 $categories_id = array_column($categories, 'id');
+$navigation = include_template('navigation.php', [
+    'categories' => $categories
+]);
 
 if (!isset($_SESSION['user'])) {
     $is_auth = false;

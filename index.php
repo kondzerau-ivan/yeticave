@@ -13,6 +13,6 @@ print(include_template('layout.php', [
     'title' => $title,
     'is_auth' => $is_auth,
     'user_name' => $user_name,
-    'categories' => $categories,
+    'navigation' => $navigation,
     'content' => $content
 ]));
