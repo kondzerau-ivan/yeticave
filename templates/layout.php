@@ -31,7 +31,7 @@
                     <?php if (isset($is_auth) && $is_auth) : ?>
                         <div class="user-menu__logged">
                             <p><?= htmlspecialchars($user_name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); ?></p>
-                            <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
+                            <a class="user-menu__bets" href="/my-bets.php">Мои ставки</a>
                             <a class="user-menu__logout" href="/logout.php">Выход</a>
                         </div>
                     <?php else : ?>

@@ -19,7 +19,7 @@
                                   <div class="lot__state">
                                       <div class="lot__rate">
                                           <?php if ($lot['bet_count']) : ?>
-                                              <span class="lot__amount"><?= htmlspecialchars($lot['bet_count']) . ' ' . get_noun_plural_form(htmlspecialchars($lot['bet_count']), 'ставка', 'ставки', 'ставок'); ?></span>
+                                              <span class="lot__amount"><?= $lot['bet_count'] . ' ' . get_noun_plural_form($lot['bet_count'], 'ставка', 'ставки', 'ставок'); ?></span>
                                           <?php else : ?>
                                               <span class="lot__amount">Стартовая цена</span>
                                           <?php endif; ?>

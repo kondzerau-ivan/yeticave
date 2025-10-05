@@ -172,6 +172,20 @@ function validatePriceStep(string $lot_step): ?string
     return null;
 }
 
+function validateBet(string $lotPrice, string $lotStep, string $userBet): ?string
+{
+    $lotPrice = intval($lotPrice);
+    $lotStep = intval($lotStep);
+    $userBet = intval($userBet);
+    $minBet = $lotPrice + $lotStep;
+
+    if ($userBet < $minBet) {
+        return 'Минимальная ставка: ' . $minBet;
+    }
+
+    return null;
+}
+
 /**
  * Проверяет, что дата больше текущей хотя бы на один день.
  *
